@@ -10,7 +10,7 @@ defmodule Bundestag.MixProject do
       deps: deps(),
       description: "Elixir client for the German Bundestag API",
       package: package(),
-      source_url: "https://github.com/o2ba/bundestag-ex"
+      source_url: "https://github.com/o2ba/bundestag"
     ]
   end
 
@@ -32,7 +32,7 @@ defmodule Bundestag.MixProject do
   defp package do
     [
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/o2ba/bundestag-ex"},
+      links: %{"GitHub" => "https://github.com/o2ba/bundestag"},
       maintainers: ["OBARI Bade"]
     ]
   end
