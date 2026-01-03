@@ -1,9 +1,48 @@
 defmodule Bundestag do
+  @moduledoc """
+  Elixir client for the German Bundestag DIP API.
+
+  ## Usage
+
+      client = Bundestag.client("your-api-key")
+
+      client
+      |> Bundestag.persons()
+      |> Enum.take(5)
+  """
+
   alias Bundestag.Client
   alias Bundestag.Model.{Person, PersonParams, ListResponse}
 
+  @doc """
+  Creates a new client with the given API key.
+
+  ## Options
+
+    * `:base_url` - Override the API base URL (useful for testing)
+
+  ## Examples
+
+      iex> client = Bundestag.client("your-api-key")
+      %Bundestag.Client{api_key: "your-api-key", base_url: "https://search.dip.bundestag.de/api/v1"}
+  """
   def client(api_key, opts \\ []), do: Client.new(api_key, opts)
 
+  @doc """
+  Returns a stream of persons from the Bundestag API.
+
+  Results are lazily fetched and paginated automatically.
+
+  ## Examples
+
+      # Fetch first 10 persons
+      client |> Bundestag.persons() |> Enum.take(10)
+
+      # Filter by name
+      client
+      |> Bundestag.persons(%PersonParams{name: "Merkel, Angela"})
+      |> Enum.to_list()
+  """
   def persons(%Client{} = client, params \\ %PersonParams{}) do
     Stream.unfold(params, fn
       nil ->
