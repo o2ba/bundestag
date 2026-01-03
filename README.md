@@ -1,21 +1,38 @@
 # Bundestag
 
-**TODO: Add description**
+Elixir client for the [German Bundestag DIP API](https://search.dip.bundestag.de/api/v1/swagger-ui/#).
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `bundestag` to your list of dependencies in `mix.exs`:
-
+Add `bundestag` to your dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:bundestag, "~> 0.1.0"}
+    {:bundestag, "~> 1.0"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/bundestag>.
+## Usage
+```elixir
+# Create a client
+client = Bundestag.client("your-api-key")
 
+# Stream all persons
+client
+|> Bundestag.persons()
+|> Enum.take(10)
+
+# Filter by name
+alias Bundestag.Model.PersonParams
+
+client
+|> Bundestag.persons(%PersonParams{name: "Merkel, Angela"})
+|> Enum.to_list()
+```
+
+Results are lazily streamed, pagination is handled automatically.
+
+## API Key
+
+Get your API key from the [Bundestag API portal](https://dip.bundestag.de/%C3%BCber-dip/hilfe/api).
