@@ -2,9 +2,7 @@ defmodule Bundestag do
   alias Bundestag.Client
   alias Bundestag.Model.{Person, PersonParams, ListResponse}
 
-  @base_url "https://search.dip.bundestag.de/api/v1"
-
-  def client(api_key), do: Client.new(api_key)
+  def client(api_key, opts \\ []), do: Client.new(api_key, opts)
 
   def persons(%Client{} = client, params \\ %PersonParams{}) do
     Stream.unfold(params, fn
@@ -21,8 +19,8 @@ defmodule Bundestag do
     |> Stream.flat_map(& &1)
   end
 
-  defp fetch_page(%Client{api_key: api_key}, params) do
-    url = "#{@base_url}/person"
+  defp fetch_page(%Client{api_key: api_key, base_url: base_url}, params) do
+    url = "#{base_url}/person"
     headers = [{"Authorization", "ApiKey #{api_key}"}]
     query = PersonParams.to_query(params)
 
