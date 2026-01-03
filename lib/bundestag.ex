@@ -1,4 +1,4 @@
-defmodule Bundestag.Client do
+defmodule Bundestag do
   alias Bundestag.Model.{Person, PersonParams, ListResponse}
 
   @base_url "https://search.dip.bundestag.de/api/v1"
