@@ -26,7 +26,7 @@ defmodule Bundestag.MixProject do
     [
       {:req, "~> 0.5"},
       {:ex_doc, "~> 0.31", only: :dev, runtime: false},
-      {:bypass, "~> 2.1"}
+      {:bypass, "~> 2.1", only: :test, runtime: false}
     ]
   end
 
